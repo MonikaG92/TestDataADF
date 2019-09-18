@@ -1,0 +1,17 @@
+{
+	"name": "SQL_ON_PREMISE",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=localhost\\SQLEXPRESS;initial catalog=Test",
+			"userName": "AP\\gadadmon",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmZGVmMzI0OC0wZTYzLTQ3ZGUtODA1NS03NjZjNTAxMTI4YTAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "localintegration",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
