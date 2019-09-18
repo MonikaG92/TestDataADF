@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "DF-SQLAUTOMATE"
+		},
+		"AZURE_SQLDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AZURE_SQLDB'"
+		},
+		"SQL_ON_PREMISE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SQL_ON_PREMISE'"
+		},
+		"SQL_ON_PREMISE_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_ON_PREMISE'"
+		},
+		"SQL_ON_PREMISE_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "AP\\gadadmon"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas Token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AZURE_SQLDB_connectionString": {
+						"value": "[parameters('AZURE_SQLDB_connectionString')]"
+					},
+					"SQL_ON_PREMISE_connectionString": {
+						"value": "[parameters('SQL_ON_PREMISE_connectionString')]"
+					},
+					"SQL_ON_PREMISE_password": {
+						"value": "[parameters('SQL_ON_PREMISE_password')]"
+					},
+					"SQL_ON_PREMISE_properties_typeProperties_userName": {
+						"value": "[parameters('SQL_ON_PREMISE_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
