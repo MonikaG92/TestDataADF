@@ -183,14 +183,15 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "azuredb",
-						"type": "DatasetReference"
-					},
-					"fieldList": [
-						{
-							"value": "contains('EMP')",
-							"type": "Expression"
+						"type": "DatasetReference",
+						"parameters": {
+							"Table_Name": {
+								"value": "\"name\": \"value\"",
+								"type": "Expression"
+							}
 						}
-					]
+					},
+					"fieldList": []
 				}
 			}
 		],
