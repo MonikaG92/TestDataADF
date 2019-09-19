@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DF-SQLAUTOMATION"
+		},
+		"AzureBlobStorage_connectionString": {
+			"value": ""
+		},
+		"SQL_ON_PREMISE_connectionString": {
+			"value": ""
+		},
+		"SQL_ON_PREMISE_password": {
+			"value": ""
+		},
+		"inputfiles_password": {
+			"value": ""
+		},
+		"SQL_ON_PREMISE_properties_typeProperties_userName": {
+			"value": "AP\\gadadmon"
+		},
+		"inputfiles_properties_typeProperties_host": {
+			"value": "C:\\Users\\gadadmon\\Desktop\\Azure\\InputFiles"
+		},
+		"inputfiles_properties_typeProperties_userId": {
+			"value": "AP\\gadadmon"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
