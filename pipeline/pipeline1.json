@@ -84,7 +84,13 @@
 				"inputs": [
 					{
 						"referenceName": "onpremisefiles",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": {
+								"value": "@activity('Get Metadata of files').output",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
