@@ -1,5 +1,5 @@
 {
-	"name": "azuredb",
+	"name": "integrationRuntime1",
 	"properties": {
 		"type": "SelfHosted"
 	}

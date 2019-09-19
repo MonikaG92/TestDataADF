@@ -1,0 +1,17 @@
+{
+	"name": "inputfiles",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Users\\gadadmon\\Desktop\\Azure\\InputFiles",
+			"userId": "AP\\gadadmon",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjYzNiNGJkNS05MDU2LTRkNDUtOTEzNy0wNzI0MTc5OTRmOGMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationinputfiles",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

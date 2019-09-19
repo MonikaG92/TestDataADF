@@ -1,0 +1,7 @@
+{
+	"name": "integrationinputfiles",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "integrtion for input files"
+	}
+}
