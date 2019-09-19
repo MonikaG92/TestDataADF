@@ -1,16 +1,17 @@
 {
-	"name": "SqlServerTable1",
+	"name": "azuredb",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "SQL_ON_PREMISE",
+			"referenceName": "AzureSqlDatabase",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "SqlServerTable",
+		"type": "AzureSqlTable",
 		"schema": [
 			{
 				"name": "emp_id",
-				"type": "nchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "emp_name",
