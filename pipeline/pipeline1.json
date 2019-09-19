@@ -8,7 +8,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata of files",
+						"activity": "GetMetdata",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -176,7 +176,7 @@
 				]
 			},
 			{
-				"name": "Get Metadata of files",
+				"name": "GetMetdata",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
