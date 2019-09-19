@@ -1,6 +1,0 @@
-{
-	"name": "azuredb",
-	"properties": {
-		"type": "SelfHosted"
-	}
-}
