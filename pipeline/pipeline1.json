@@ -6,14 +6,7 @@
 				"name": "getinputfiles",
 				"description": "used to get input files from on premise",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "GetMetdata",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -176,7 +169,7 @@
 				]
 			},
 			{
-				"name": "GetMetdata",
+				"name": "Get Metadata1",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -189,19 +182,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "blobstorage",
+						"referenceName": "azuredb",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
-						"itemName"
-					],
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
-					}
+						{
+							"value": "contains('EMP')",
+							"type": "Expression"
+						}
+					]
 				}
 			}
 		],
