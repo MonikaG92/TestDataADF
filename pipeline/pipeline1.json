@@ -3,7 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Data1",
+				"name": "getinputfiles",
+				"description": "used to get input files from on premise",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -25,11 +26,26 @@
 				],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.*"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
-						"type": "SqlServerSink",
-						"tableOption": "autoCreate"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -41,8 +57,8 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "emp_id",
-									"type": "String"
+									"type": "String",
+									"ordinal": 1
 								}
 							},
 							{
@@ -51,8 +67,8 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "emp_name",
-									"type": "String"
+									"type": "String",
+									"ordinal": 2
 								}
 							}
 						]
@@ -60,13 +76,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SqlServerTable1",
+						"referenceName": "onpremisefiles",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTable1",
+						"referenceName": "blobstorage",
 						"type": "DatasetReference"
 					}
 				]
