@@ -66,17 +66,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"SQL_ON_PREMISE_connectionString": {
-						"value": "[parameters('SQL_ON_PREMISE_connectionString')]"
-					},
-					"SQL_ON_PREMISE_password": {
-						"value": "[parameters('SQL_ON_PREMISE_password')]"
-					},
 					"AzureBlobStorage_connectionString": {
 						"value": "[parameters('AzureBlobStorage_connectionString')]"
 					},
 					"AzureSqlDatabase_connectionString": {
 						"value": "[parameters('AzureSqlDatabase_connectionString')]"
+					},
+					"SQL_ON_PREMISE_connectionString": {
+						"value": "[parameters('SQL_ON_PREMISE_connectionString')]"
+					},
+					"SQL_ON_PREMISE_password": {
+						"value": "[parameters('SQL_ON_PREMISE_password')]"
 					},
 					"inputfiles_password": {
 						"value": "[parameters('inputfiles_password')]"

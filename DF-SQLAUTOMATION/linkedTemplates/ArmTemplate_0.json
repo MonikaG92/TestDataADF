@@ -7,14 +7,6 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "DF-SQLAUTOMATION"
 		},
-		"SQL_ON_PREMISE_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SQL_ON_PREMISE'"
-		},
-		"SQL_ON_PREMISE_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SQL_ON_PREMISE'"
-		},
 		"AzureBlobStorage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
@@ -22,6 +14,14 @@
 		"AzureSqlDatabase_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
+		"SQL_ON_PREMISE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SQL_ON_PREMISE'"
+		},
+		"SQL_ON_PREMISE_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_ON_PREMISE'"
 		},
 		"inputfiles_password": {
 			"type": "secureString",
@@ -44,24 +44,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/SQL_ON_PREMISE')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SQL_ON_PREMISE_connectionString')]",
-					"userName": "[parameters('SQL_ON_PREMISE_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SQL_ON_PREMISE_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/azureblob')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
@@ -112,6 +94,16 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/onpremisesqldb')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -147,6 +139,30 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_ON_PREMISE')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('SQL_ON_PREMISE_connectionString')]",
+					"userName": "[parameters('SQL_ON_PREMISE_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SQL_ON_PREMISE_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationinputfiles",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationinputfiles')]"
 			]
 		},
 		{
@@ -201,149 +217,50 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/blobstorage')]",
+			"name": "[concat(parameters('factoryName'), '/onpremisedb')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage",
+					"referenceName": "SQL_ON_PREMISE",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "files"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
+				"parameters": {
+					"TableName": {
+						"type": "string"
+					}
 				},
-				"schema": []
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "emp_id",
+						"type": "nchar"
+					},
+					{
+						"name": "emp_name",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "EMPLOYEE"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+				"[concat(variables('factoryId'), '/linkedServices/SQL_ON_PREMISE')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/onpremisefiles')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "inputfiles",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/inputfiles')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/LoadDataToAzure')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "getinputfiles",
-						"description": "used to get input files from on premise",
+						"name": "CopyOnpremiseSqlData",
 						"type": "Copy",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dbo.EMPLOYEE"
-							},
-							{
-								"name": "Destination",
-								"value": "dbo.EMPLOYEE"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSettings",
-									"recursive": false,
-									"wildcardFileName": "*.*",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {},
-										"sink": {
-											"ordinal": 1
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "onpremisefiles",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "blobstorage",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "blobtoSQL",
-						"description": "loading data into file to blob\n",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "getinputfiles",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -354,51 +271,27 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.*"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
+								"type": "SqlServerSource"
 							},
 							"sink": {
 								"type": "AzureSqlSink"
 							},
 							"enableStaging": false,
 							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"type": "Int32",
-											"ordinal": 1
-										},
-										"sink": {
-											"name": "emp_id",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 2
-										},
-										"sink": {
-											"name": "emp_name",
-											"type": "String"
-										}
-									}
-								]
+								"value": "@pipeline().parameters.Entity",
+								"type": "Expression"
 							}
 						},
 						"inputs": [
 							{
-								"referenceName": "blobstorage",
+								"referenceName": "onpremisedb",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"TableName": {
+										"value": "@variables('entityname')",
+										"type": "Expression"
+									}
+								}
 							}
 						],
 						"outputs": [
@@ -406,27 +299,29 @@
 								"referenceName": "azuredb",
 								"type": "DatasetReference",
 								"parameters": {
-									"Table_Name": "EMPLOYEE"
+									"Table_Name": {
+										"value": "@variables('entityname')",
+										"type": "Expression"
+									}
 								}
 							}
 						]
 					}
 				],
 				"parameters": {
-					"FileName": {
+					"Entity": {
 						"type": "string"
 					}
 				},
 				"variables": {
-					"Name": {
+					"entityname": {
 						"type": "String"
 					}
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/onpremisefiles')]",
-				"[concat(variables('factoryId'), '/datasets/blobstorage')]",
+				"[concat(variables('factoryId'), '/datasets/onpremisedb')]",
 				"[concat(variables('factoryId'), '/datasets/azuredb')]"
 			]
 		}
