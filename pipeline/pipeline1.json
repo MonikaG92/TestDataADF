@@ -48,7 +48,17 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"sink": {
+									"ordinal": 1
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
@@ -134,9 +144,39 @@
 				"outputs": [
 					{
 						"referenceName": "azuredb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Table_Name": "EMPLOYEE"
+						}
 					}
 				]
+			},
+			{
+				"name": "GetMetadata",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureParameters": {
+						"Table_Name": {
+							"value": {
+								"value": "@variables('Name')",
+								"type": "Expression"
+							}
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"parameters": {
