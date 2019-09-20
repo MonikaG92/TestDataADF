@@ -13,20 +13,6 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "emp_id",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "emp_name",
-				"type": "varchar"
-			}
-		],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "EMPLOYEE"
-		}
+		"schema": []
 	}
 }
