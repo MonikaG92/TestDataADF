@@ -8,6 +8,9 @@
 		"AzureBlobStorage_connectionString": {
 			"value": ""
 		},
+		"AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
 		"SQL_ON_PREMISE_connectionString": {
 			"value": ""
 		},

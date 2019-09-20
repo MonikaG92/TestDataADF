@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
 		},
+		"AzureSqlDatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
 		"SQL_ON_PREMISE_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQL_ON_PREMISE'"
@@ -73,8 +77,9 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "FileServerReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.*"
+									"recursive": false,
+									"wildcardFileName": "*.*",
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
@@ -96,23 +101,9 @@
 								"type": "TabularTranslator",
 								"mappings": [
 									{
-										"source": {
-											"name": "emp_id",
-											"type": "String"
-										},
+										"source": {},
 										"sink": {
-											"type": "String",
 											"ordinal": 1
-										}
-									},
-									{
-										"source": {
-											"name": "emp_name",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 2
 										}
 									}
 								]
@@ -122,12 +113,7 @@
 							{
 								"referenceName": "onpremisefiles",
 								"type": "DatasetReference",
-								"parameters": {
-									"filename": {
-										"value": "@variables('Name')",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
@@ -211,11 +197,18 @@
 							{
 								"referenceName": "azuredb",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"Table_Name": "EMPLOYEE"
+								}
 							}
 						]
 					}
 				],
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
 				"variables": {
 					"Name": {
 						"type": "String"
@@ -246,20 +239,10 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "emp_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "emp_name",
-						"type": "varchar"
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "EMPLOYEE"
+					"table": "METADATA_INFO"
 				}
 			},
 			"dependsOn": [
@@ -301,20 +284,11 @@
 					"referenceName": "inputfiles",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"filename": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@dataset().filename",
-							"type": "Expression"
-						}
+						"type": "FileServerLocation"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -351,8 +325,11 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "AzureSqlDatabase",
 				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase_connectionString')]"
+				},
 				"connectVia": {
 					"referenceName": "integrationRuntime2",
 					"type": "IntegrationRuntimeReference"
