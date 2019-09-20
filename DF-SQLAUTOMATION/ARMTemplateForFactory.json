@@ -68,10 +68,6 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"tableOption": {
-									"value": "@variables('entityname')",
-									"type": "Expression"
-								},
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
