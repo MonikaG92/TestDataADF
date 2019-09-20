@@ -16,6 +16,10 @@
 				"name": "emp_name",
 				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EMPLOYEE"
+		}
 	}
 }
