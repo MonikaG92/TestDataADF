@@ -19,12 +19,38 @@
 						"type": "SqlServerSource"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "AzureSqlSink",
+						"tableOption": {
+							"value": "@variables('entityname')",
+							"type": "Expression"
+						},
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
-						"value": "@pipeline().parameters.Entity",
-						"type": "Expression"
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "emp_id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "emp_id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "emp_name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "emp_name",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
