@@ -30,25 +30,13 @@
 				"inputs": [
 					{
 						"referenceName": "onpremisedb",
-						"type": "DatasetReference",
-						"parameters": {
-							"TableName": {
-								"value": "@variables('entityname')",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "azuredb",
-						"type": "DatasetReference",
-						"parameters": {
-							"Table_Name": {
-								"value": "@variables('entityname')",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}

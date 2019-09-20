@@ -5,11 +5,6 @@
 			"referenceName": "SQL_ON_PREMISE",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"TableName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [
@@ -21,10 +16,6 @@
 				"name": "emp_name",
 				"type": "varchar"
 			}
-		],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "EMPLOYEE"
-		}
+		]
 	}
 }
