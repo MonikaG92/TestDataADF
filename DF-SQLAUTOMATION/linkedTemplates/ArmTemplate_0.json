@@ -198,18 +198,12 @@
 					"referenceName": "AzureSqlDatabase",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"Table_Name": {
-						"type": "string",
-						"defaultValue": "EMPLOYEE"
-					}
-				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "METADATA_INFO"
+					"table": "EMPLOYEE"
 				}
 			},
 			"dependsOn": [
@@ -224,11 +218,6 @@
 				"linkedServiceName": {
 					"referenceName": "SQL_ON_PREMISE",
 					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"TableName": {
-						"type": "string"
-					}
 				},
 				"annotations": [],
 				"type": "SqlServerTable",
@@ -286,24 +275,14 @@
 							{
 								"referenceName": "onpremisedb",
 								"type": "DatasetReference",
-								"parameters": {
-									"TableName": {
-										"value": "@variables('entityname')",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "azuredb",
 								"type": "DatasetReference",
-								"parameters": {
-									"Table_Name": {
-										"value": "@variables('entityname')",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						]
 					}
