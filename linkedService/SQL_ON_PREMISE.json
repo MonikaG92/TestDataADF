@@ -2,12 +2,17 @@
 	"name": "SQL_ON_PREMISE",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"parameters": {
+			"Table": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
 			"connectionString": "integrated security=True;data source=localhost\\SQLEXPRESS;initial catalog=Test",
 			"userName": "AP\\gadadmon",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhOWEwNzU5OS1mMTMzLTRkYjgtOTU1NC03MTRiYzVmZjMwODMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3YWUyMmFkMS0zYjU0LTRiZTMtODA2MC01ZDk2ZWI5MTgyNGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationinputfiles",
