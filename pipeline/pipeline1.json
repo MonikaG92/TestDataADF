@@ -53,13 +53,7 @@
 				"inputs": [
 					{
 						"referenceName": "onpremisefiles",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": {
-								"value": "@pipeline().parameters.FileNamepipeline().parameters.FileName",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
