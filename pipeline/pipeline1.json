@@ -17,13 +17,16 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "azuredb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": {
+								"value": "@pipeline().parameters.REQ_NAME",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
-						{
-							"value": "@pipeline().parameters.REQ_NAME",
-							"type": "Expression"
-						}
+						"exists"
 					]
 				}
 			},
@@ -51,7 +54,10 @@
 						"type": "SqlServerSource"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "AzureSqlSink",
+						"writeBatchSize": 0,
+						"preCopyScript": "select *  from METDATA_INFO ",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -68,7 +74,13 @@
 				"outputs": [
 					{
 						"referenceName": "azuredb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": {
+								"value": "@pipeline().parameters.REQ_NAME",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
