@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "Take_Metadata_info",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -42,11 +42,11 @@
 				}
 			},
 			{
-				"name": "Copy Data1",
+				"name": "Cpy_OnPremise_Azure",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Take_Metadata_info",
 						"dependencyConditions": [
 							"Succeeded"
 						]
