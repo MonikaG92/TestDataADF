@@ -177,7 +177,12 @@
 							{
 								"referenceName": "azuredb",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"AZUREDBNAME": {
+										"value": "@pipeline().parameters.SRCNAME",
+										"type": "Expression"
+									}
+								}
 							}
 						]
 					}
@@ -203,12 +208,19 @@
 					"referenceName": "AzureSqlDatabase",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"AZUREDBNAME": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "METADATA_INFO"
+					"table": {
+						"value": "@dataset().AZUREDBNAME",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [
