@@ -163,8 +163,8 @@
 							"sink": {
 								"type": "AzureSqlSink",
 								"sqlWriterStoredProcedureName": "[[dbo].[selecttablename]",
-								"sqlWriterTableType": "foo",
-								"storedProcedureTableTypeParameterName": "fooo",
+								"sqlWriterTableType": "TableName",
+								"storedProcedureTableTypeParameterName": "TableName",
 								"storedProcedureParameters": {
 									"TableName": {
 										"type": "String",
