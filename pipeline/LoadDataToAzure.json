@@ -68,7 +68,7 @@
 							"colname": {
 								"type": "String",
 								"value": {
-									"value": "@activity('Lookup1').output.value[0].colname",
+									"value": "@activity('Take_Metadata_info').output.value[0].colname",
 									"type": "Expression"
 								}
 							},
@@ -98,7 +98,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"AZUREDBNAME": {
-								"value": "@activity('Lookup1').output.value[0].tgt_entity_name",
+								"value": "@activity('Take_Metadata_info').output.value[0].tgt_entity_name",
 								"type": "Expression"
 							}
 						}
