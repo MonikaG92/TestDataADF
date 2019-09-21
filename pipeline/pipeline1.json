@@ -3,9 +3,55 @@
 	"properties": {
 		"activities": [
 			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[selectmetdatdata]",
+						"storedProcedureParameters": {
+							"TableName": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.SRCNAME",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"dataset": {
+						"referenceName": "azuredb",
+						"type": "DatasetReference",
+						"parameters": {
+							"AZUREDBNAME": {
+								"value": "@pipeline().parameters.SRCNAME",
+								"type": "Expression"
+							}
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
 				"name": "Copy Data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -22,7 +68,7 @@
 							"colname": {
 								"type": "String",
 								"value": {
-									"value": "@activity('Lookup1').output.colname",
+									"value": "@activity('Lookup1').output.value",
 									"type": "Expression"
 								}
 							},
@@ -36,8 +82,7 @@
 						}
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"disableMetricsCollection": false
+						"type": "AzureSqlSink"
 					},
 					"enableStaging": false
 				},
