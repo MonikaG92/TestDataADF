@@ -68,7 +68,7 @@
 							"colname": {
 								"type": "String",
 								"value": {
-									"value": "@activity('Lookup1').output.value.colname",
+									"value": "@activity('Lookup1').output.value[0].colname",
 									"type": "Expression"
 								}
 							},
