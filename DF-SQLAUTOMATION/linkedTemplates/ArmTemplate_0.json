@@ -254,91 +254,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "CopyOnpremiseSqlData",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource"
-							},
-							"sink": {
-								"type": "SqlServerSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "emp_id",
-											"type": "String"
-										},
-										"sink": {
-											"name": "emp_id",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "emp_name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "emp_name",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "onpremisedb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "onpremisedb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"parameters": {
-					"Entity": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"entityname": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/onpremisedb')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Take",
+						"name": "Take_Metadata_info",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -377,11 +293,11 @@
 						}
 					},
 					{
-						"name": "Copy Data1",
+						"name": "Cpy_OnPremise_Azure",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Take",
+								"activity": "Take_Metadata_info",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -403,7 +319,7 @@
 									"colname": {
 										"type": "String",
 										"value": {
-											"value": "@activity('Lookup1').output.value[0].colname",
+											"value": "@activity('Take_Metadata_info').output.value[0].colname",
 											"type": "Expression"
 										}
 									},
@@ -434,7 +350,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"AZUREDBNAME": {
-										"value": "@activity('Lookup1').output.value[0].tgt_entity_name",
+										"value": "@activity('Take_Metadata_info').output.value[0].tgt_entity_name",
 										"type": "Expression"
 									}
 								}
