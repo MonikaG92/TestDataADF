@@ -30,14 +30,6 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"sqlWriterStoredProcedureName": "[dbo].[selecttablename]",
-						"sqlWriterTableType": "AzureSqlSink",
-						"storedProcedureTableTypeParameterName": "TableName",
-						"storedProcedureParameters": {
-							"TableName": {
-								"type": "String"
-							}
-						},
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false
