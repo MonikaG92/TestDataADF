@@ -19,8 +19,7 @@
 						"type": "SqlServerSource"
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"disableMetricsCollection": false
+						"type": "SqlServerSink"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -57,7 +56,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "azuredb",
+						"referenceName": "onpremisedb",
 						"type": "DatasetReference"
 					}
 				]
