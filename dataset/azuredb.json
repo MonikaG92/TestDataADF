@@ -5,12 +5,19 @@
 			"referenceName": "AzureSqlDatabase",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"AZUREDBNAME": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "METADATA_INFO"
+			"schema": {
+				"value": "@dataset().AZUREDBNAME",
+				"type": "Expression"
+			}
 		}
 	}
 }

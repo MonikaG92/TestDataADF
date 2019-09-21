@@ -43,7 +43,13 @@
 				"outputs": [
 					{
 						"referenceName": "azuredb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"AZUREDBNAME": {
+								"value": "@pipeline().parameters.SRCNAME",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
