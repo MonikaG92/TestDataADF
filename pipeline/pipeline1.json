@@ -5,14 +5,7 @@
 			{
 				"name": "Copy Data1",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Lookup1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -46,11 +39,7 @@
 						"type": "AzureSqlSink",
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false,
-					"translator": {
-						"value": "@activity('Lookup1').output",
-						"type": "Expression"
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -70,42 +59,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[selectmetdatdata]",
-						"storedProcedureParameters": {
-							"TableName": {
-								"type": "String",
-								"value": {
-									"value": "@pipeline().parameters.SRCNAME",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					"dataset": {
-						"referenceName": "azuredb",
-						"type": "DatasetReference",
-						"parameters": {
-							"AZUREDBNAME": "METADATINFO"
-						}
-					},
-					"firstRowOnly": false
-				}
 			}
 		],
 		"parameters": {
