@@ -3,39 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "azuredb",
-						"type": "DatasetReference",
-						"parameters": {
-							"TableName": {
-								"value": "@pipeline().parameters.REQ_NAME",
-								"type": "Expression"
-							}
-						}
-					},
-					"fieldList": [
-						"exists"
-					]
-				}
-			},
-			{
 				"name": "Copy Data1",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Filter1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,12 +28,11 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"writeBatchSize": 0,
-						"preCopyScript": "select *  from METDATA_INFO ",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
-						"value": "@activity('Get Metadata1').output",
+						"value": "@activity('Filter1').output",
 						"type": "Expression"
 					}
 				},
@@ -74,15 +45,56 @@
 				"outputs": [
 					{
 						"referenceName": "azuredb",
-						"type": "DatasetReference",
-						"parameters": {
-							"TableName": {
-								"value": "@pipeline().parameters.REQ_NAME",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup1').output",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@activity('Lookup1').output startswith(@pipeline().parameters.REQ_NAME)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from METADATA_INFO"
+					},
+					"dataset": {
+						"referenceName": "azuredb",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
 			}
 		],
 		"parameters": {
