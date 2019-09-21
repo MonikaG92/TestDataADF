@@ -338,11 +338,50 @@
 			"properties": {
 				"activities": [
 					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderStoredProcedureName": "[[dbo].[selectmetdatdata]",
+								"storedProcedureParameters": {
+									"TableName": {
+										"type": "String",
+										"value": {
+											"value": "@pipeline().parameters.SRCNAME",
+											"type": "Expression"
+										}
+									}
+								}
+							},
+							"dataset": {
+								"referenceName": "azuredb",
+								"type": "DatasetReference",
+								"parameters": {
+									"AZUREDBNAME": {
+										"value": "@pipeline().parameters.SRCNAME",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
 						"name": "Copy Data1",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Stored Procedure1",
+								"activity": "Lookup1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -364,7 +403,7 @@
 									"colname": {
 										"type": "String",
 										"value": {
-											"value": "@activity('Stored Procedure1').output.colname",
+											"value": "@activity('Lookup1').output.value",
 											"type": "Expression"
 										}
 									},
@@ -378,14 +417,9 @@
 								}
 							},
 							"sink": {
-								"type": "AzureSqlSink",
-								"disableMetricsCollection": false
+								"type": "AzureSqlSink"
 							},
-							"enableStaging": false,
-							"translator": {
-								"value": "@activity('Stored Procedure1').output",
-								"type": "Expression"
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -406,35 +440,6 @@
 								}
 							}
 						]
-					},
-					{
-						"name": "Stored Procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[selectmetdatdata]",
-							"storedProcedureParameters": {
-								"tablename": {
-									"value": {
-										"value": "@pipeline().parameters.SRCNAME",
-										"type": "Expression"
-									},
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase",
-							"type": "LinkedServiceReference"
-						}
 					}
 				],
 				"parameters": {
@@ -445,9 +450,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/onpremisedb')]",
 				"[concat(variables('factoryId'), '/datasets/azuredb')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+				"[concat(variables('factoryId'), '/datasets/onpremisedb')]"
 			]
 		}
 	]
