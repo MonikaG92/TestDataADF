@@ -338,7 +338,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Lookup1",
+						"name": "Take",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -381,7 +381,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Lookup1",
+								"activity": "Take",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -434,7 +434,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"AZUREDBNAME": {
-										"value": "@pipeline().parameters.SRCNAME",
+										"value": "@activity('Lookup1').output.value[0].tgt_entity_name",
 										"type": "Expression"
 									}
 								}
