@@ -26,6 +26,13 @@
 						"type": "SqlServerSource",
 						"sqlReaderStoredProcedureName": "[dbo].[selectdata]",
 						"storedProcedureParameters": {
+							"colname": {
+								"type": "String",
+								"value": {
+									"value": "@activity('Stored Procedure1').output.colname",
+									"type": "Expression"
+								}
+							},
 							"TableName": {
 								"type": "String",
 								"value": {
