@@ -31,7 +31,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"sqlWriterStoredProcedureName": "[dbo].[selecttablename]",
-						"sqlWriterTableType": "METADATA_INFO",
+						"sqlWriterTableType": "2",
 						"storedProcedureTableTypeParameterName": "TableName",
 						"storedProcedureParameters": {
 							"TableName": {
