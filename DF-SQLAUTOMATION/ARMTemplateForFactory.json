@@ -136,7 +136,7 @@
 							},
 							"enableStaging": false,
 							"translator": {
-								"value": "@activity('Copy from Onpremise').output.value.colname",
+								"value": "@activity('Take_Metadata_info').output.value.src_entity_name",
 								"type": "Expression"
 							}
 						},
