@@ -13,6 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
@@ -29,7 +30,13 @@
 					},
 					"dataset": {
 						"referenceName": "azuredb",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"AZUREDBNAME": {
+								"value": "@pipeline().parameters.SRCNAME",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
