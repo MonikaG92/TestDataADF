@@ -74,7 +74,7 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": false,
 							"wildcardFileName": {
-								"value": "@{pipeline().parameters.SRCNAME}.txt",
+								"value": "*@{pipeline().parameters.SRCNAME}*",
 								"type": "Expression"
 							},
 							"enablePartitionDiscovery": false
