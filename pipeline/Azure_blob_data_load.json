@@ -131,7 +131,11 @@
 						"storeSettings": {
 							"type": "FileServerReadSettings",
 							"recursive": true,
-							"wildcardFileName": "*.*"
+							"wildcardFileName": {
+								"value": "@{pipeline().parameters.SRCNAME}",
+								"type": "Expression"
+							},
+							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
@@ -159,7 +163,13 @@
 				"outputs": [
 					{
 						"referenceName": "delimtedfileazure",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.SRCNAME",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
