@@ -226,11 +226,20 @@
 					"referenceName": "AzureBlobStorage",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FileName",
+							"type": "Expression"
+						},
 						"container": "files"
 					},
 					"columnDelimiter": ",",
@@ -376,9 +385,9 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
+									"recursive": false,
 									"wildcardFileName": {
-										"value": "@{pipeline().parameters.SRCNAME}",
+										"value": "@{pipeline().parameters.SRCNAME}.txt",
 										"type": "Expression"
 									},
 									"enablePartitionDiscovery": false
@@ -396,7 +405,12 @@
 							{
 								"referenceName": "delimtedfileazure",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"FileName": {
+										"value": "@activity('Take_Metadata_info').output.src_entity_name",
+										"type": "Expression"
+									}
+								}
 							}
 						],
 						"outputs": [
@@ -430,7 +444,11 @@
 								"storeSettings": {
 									"type": "FileServerReadSettings",
 									"recursive": true,
-									"wildcardFileName": "*.*"
+									"wildcardFileName": {
+										"value": "@{pipeline().parameters.SRCNAME}",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
@@ -460,7 +478,12 @@
 							{
 								"referenceName": "delimtedfileazure",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"FileName": {
+										"value": "@pipeline().parameters.SRCNAME",
+										"type": "Expression"
+									}
+								}
 							}
 						]
 					}
