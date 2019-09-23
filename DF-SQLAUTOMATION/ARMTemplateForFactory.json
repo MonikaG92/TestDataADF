@@ -146,7 +146,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"FileName": {
-										"value": "@activity('Take_Metadata_info').output.value[0].JSON_F52E2B61-18A1-11d1-B105-00805F49916B.src_entity_name",
+										"value": "@activity('Take_Metadata_info').output.value[0].src_entity_name",
 										"type": "Expression"
 									}
 								}
@@ -158,7 +158,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"AZUREDBNAME": {
-										"value": "@json(activity('Take_Metadata_info').output.value[0].JSON_F52E2B61-18A1-11d1-B105-00805F49916B.tgt_entity_name)",
+										"value": "@json(activity('Take_Metadata_info').output.value[0].tgt_entity_name)",
 										"type": "Expression"
 									}
 								}
