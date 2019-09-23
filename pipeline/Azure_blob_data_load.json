@@ -72,9 +72,9 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"wildcardFileName": {
-								"value": "@{pipeline().parameters.SRCNAME}",
+								"value": "@{pipeline().parameters.SRCNAME}.txt",
 								"type": "Expression"
 							},
 							"enablePartitionDiscovery": false
