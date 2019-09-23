@@ -86,7 +86,11 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"value": "@activity('Take_Metadata_info').output.value[0].colname",
+						"type": "Expression"
+					}
 				},
 				"inputs": [
 					{
