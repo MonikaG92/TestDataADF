@@ -136,7 +136,7 @@
 							},
 							"enableStaging": false,
 							"translator": {
-								"value": "@activity('Take_Metadata_info').output.value[0].metainfo[0].src_entity_name",
+								"value": "@JSON(activity('Take_Metadata_info').output.value[0].metainfo[0].src_entity_name)",
 								"type": "Expression"
 							}
 						},
@@ -145,10 +145,7 @@
 								"referenceName": "delimtedfileazure",
 								"type": "DatasetReference",
 								"parameters": {
-									"FileName": {
-										"value": "@activity('Take_Metadata_info').output.value[0].metainfo[0].src_entity_name",
-										"type": "Expression"
-									}
+									"FileName": "EMPLOYEE"
 								}
 							}
 						],
@@ -157,10 +154,7 @@
 								"referenceName": "azuredb",
 								"type": "DatasetReference",
 								"parameters": {
-									"AZUREDBNAME": {
-										"value": "@activity('Take_Metadata_info').output.value[0].metainfo[0].src_entity_name",
-										"type": "Expression"
-									}
+									"AZUREDBNAME": "EMPLOYEE"
 								}
 							}
 						]
