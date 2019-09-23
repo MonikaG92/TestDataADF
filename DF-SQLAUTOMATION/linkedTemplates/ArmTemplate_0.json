@@ -401,7 +401,7 @@
 							},
 							"enableStaging": false,
 							"translator": {
-								"value": "@activity('Take_Metadata_info').output.value().colname",
+								"value": "@activity('Take_Metadata_info').output.value.colname",
 								"type": "Expression"
 							}
 						},
