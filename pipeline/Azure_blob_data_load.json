@@ -94,7 +94,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
-								"value": "@activity('Take_Metadata_info').output.src_entity_name",
+								"value": "@activity('Take_Metadata_info').output.value.src_entity_name",
 								"type": "Expression"
 							}
 						}
