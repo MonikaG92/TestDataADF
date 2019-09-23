@@ -411,7 +411,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"FileName": {
-										"value": "@activity('Take_Metadata_info').output",
+										"value": "@JSON(activity('Take_Metadata_info').output.value[0].type)",
 										"type": "Expression"
 									}
 								}
