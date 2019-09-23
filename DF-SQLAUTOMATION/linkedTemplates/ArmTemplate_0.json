@@ -445,7 +445,7 @@
 									"type": "FileServerReadSettings",
 									"recursive": true,
 									"wildcardFileName": {
-										"value": "@{pipeline().parameters.SRCNAME}",
+										"value": "*@{pipeline().parameters.SRCNAME}*",
 										"type": "Expression"
 									},
 									"enablePartitionDiscovery": false
