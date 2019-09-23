@@ -91,7 +91,13 @@
 				"inputs": [
 					{
 						"referenceName": "delimtedfileazure",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@activity('Take_Metadata_info').output.src_entity_name",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
