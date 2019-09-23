@@ -88,7 +88,7 @@
 					},
 					"enableStaging": false,
 					"translator": {
-						"value": "@activity('Take_Metadata_info').output.value.src_entity_name",
+						"value": "@activity('Take_Metadata_info').output.value[0].src_entity_name",
 						"type": "Expression"
 					}
 				},
@@ -98,7 +98,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
-								"value": "@activity('Take_Metadata_info').output.value.src_entity_name",
+								"value": "@activity('Take_Metadata_info').output.value[0].src_entity_name",
 								"type": "Expression"
 							}
 						}
@@ -110,7 +110,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"AZUREDBNAME": {
-								"value": "@activity('Take_Metadata_info').output.value.tgt_entity_name",
+								"value": "@activity('Take_Metadata_info').output.value[0].tgt_entity_name",
 								"type": "Expression"
 							}
 						}
