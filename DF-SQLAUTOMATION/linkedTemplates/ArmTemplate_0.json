@@ -423,7 +423,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"AZUREDBNAME": {
-										"value": "@json(activity('Take_Metadata_info').output.value[0].tgt_entity_name)",
+										"value": "@activity('Take_Metadata_info').output.value[0].tgt_entity_name",
 										"type": "Expression"
 									}
 								}
