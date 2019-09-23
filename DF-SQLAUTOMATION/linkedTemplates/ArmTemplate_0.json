@@ -401,7 +401,7 @@
 							},
 							"enableStaging": false,
 							"translator": {
-								"value": "@concat(activity('Take_Metadata_info').output.value[0].src_colmn_name,' : ',activity('Take_Metadata_info').output.value[0].tgt_colmn_name)",
+								"value": "@activity('Take_Metadata_info').output.value[0].colname",
 								"type": "Expression"
 							}
 						},
