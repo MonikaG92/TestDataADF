@@ -17,14 +17,11 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[selectmetdatdata]",
+						"sqlReaderStoredProcedureName": "[dbo].[backup]",
 						"storedProcedureParameters": {
 							"TableName": {
 								"type": "String",
-								"value": {
-									"value": "@pipeline().parameters.SRCNAME",
-									"type": "Expression"
-								}
+								"value": "@pipeline().parameters.SRCNAME"
 							}
 						}
 					},
